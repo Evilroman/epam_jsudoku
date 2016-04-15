@@ -5,12 +5,22 @@
      ####################### target: checkstyle ###############################
      ########################################################################## -->
 <target name="checkstyle"
-        description="Generates a report of code convention violations.">
-  <checkstyle config="checkstyle.xml" failureProperty="checkstyle.failure" failOnViolation="false">
+        description="Generates a report of code convention violations."
+	depends="init-checkstyle">
+  <checkstyle config="checkstyle.xml"
+              failureProperty="checkstyle.failure"
+              failOnViolation="false">
     <formatter type="xml" tofile="checkstyle_report.xml"/>
     <fileset dir="oyg" includes="**/*.java"/>
     <fileset dir="org" includes="**/*.java"/>
   </checkstyle>
+</target>
+
+<target name="init-checkstyle">
+	<path id="checkstyle.lib.path">
+            <fileset dir="org" includes="*.jar"/>
+	</path>
+	<taskdef resource="com/puppycrawl/tools/checkstyle/ant/checkstyle-ant-task.properties" classpathref="checkstyle.lib.path"/>
 </target>
 <!-- ##########################################################################
      ####################### target: make.dirs ###############################
