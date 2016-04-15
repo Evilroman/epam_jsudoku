@@ -5,8 +5,7 @@
      ####################### target: checkstyle ###############################
      ########################################################################## -->
 <target name="checkstyle"
-        description="Generates a report of code convention violations."
-	depends="init-checkstyle">
+        description="Generates a report of code convention violations.">
   <checkstyle config="checkstyle.xml"
               failureProperty="checkstyle.failure"
               failOnViolation="false">
