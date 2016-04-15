@@ -15,13 +15,6 @@
     <fileset dir="org" includes="**/*.java"/>
   </checkstyle>
 </target>
-
-<target name="init-checkstyle">
-	<path id="checkstyle.lib.path">
-            <fileset dir="lib" includes="*.jar"/>
-	</path>
-	<taskdef resource="com/puppycrawl/tools/checkstyle/ant/checkstyle-ant-task.properties" classpathref="checkstyle.lib.path"/>
-</target>
 <!-- ##########################################################################
      ####################### target: make.dirs ###############################
      ########################################################################## -->
