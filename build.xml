@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="build" default="all" basedir=".">
+
+<!-- ##########################################################################
+     ####################### target: checkstyle ###############################
+     ########################################################################## -->
+<target name="checkstyle"
+        description="Generates a report of code convention violations."
+	depends="init-checkstyle">
+  <checkstyle config="checkstyle.xml"
+              failureProperty="checkstyle.failure"
+              failOnViolation="false">
+    <formatter type="xml" tofile="checkstyle_report.xml"/>
+    <fileset dir="oyg" includes="**/*.java"/>
+    <fileset dir="org" includes="**/*.java"/>
+  </checkstyle>
+</target>
+
+<target name="init-checkstyle">
+	<path id="checkstyle.lib.path">
+            <fileset dir="lib" includes="*.jar"/>
+	</path>
+	<taskdef resource="com/puppycrawl/tools/checkstyle/ant/checkstyle-ant-task.properties" classpathref="checkstyle.lib.path"/>
+</target>
+<!-- ##########################################################################
+     ####################### target: make.dirs ###############################
+     ########################################################################## -->
+                 <target name="make.dirs" description="Make some dirs" depends="clean, checkstyle">
+                         <mkdir dir="JSudoku"/>
+                 </target>
+<!-- ##########################################################################
+     ####################### target: compile ###############################
+     ########################################################################## -->
+		 <target name="compile" depends="make.dirs">
+        		<javac destdir="JSudoku">
+				<compilerarg value="-Xlint:unchecked"/>
+	            		<src path="org"/>
+		    		<src path="oyg"/>
+	            		<classpath path="oyg.sudoku.CreateSudokuGUI" />
+			</javac>
+		 </target>
+<!-- ##########################################################################
+     ####################### target: make.jar ###############################
+     ########################################################################## -->
+		 <target name="make.jar" depends="compile">
+			<echo>Create run-able jar-file</echo>
+                         <jar destfile="JSudoku.jar">
+                                 <fileset dir="JSudoku">
+                                        <include name="**/*.class"/>
+                                        <include name="**/*.java"/>
+                                 </fileset>
+				 <manifest>
+      					<attribute name="Main-Class" value="oyg.sudoku.CreateSudokuGUI"/>
+    				 </manifest>
+                         </jar>
+		 </target>
+<!-- ##########################################################################
+     ####################### target: clean ###############################
+     ########################################################################## -->
+                 <target name="clean" description="Clean up temp directories">
+                         <echo>[I'm cleaning up]</echo>
+                         <delete dir="JSudoku"/>
+                 </target>
+<!-- ##########################################################################
+     ####################### target: make.jar ###############################
+     ########################################################################## -->
+                 <target name="all" description="Prepare the build"  depends="make.jar"/>
+</project>
