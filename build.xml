@@ -6,9 +6,7 @@
      ########################################################################## -->
 <target name="checkstyle"
         description="Generates a report of code convention violations.">
-  <checkstyle config="checkstyle.xml"
-              failureProperty="checkstyle.failure"
-              failOnViolation="false">
+  <checkstyle config="checkstyle.xml" failureProperty="checkstyle.failure" failOnViolation="false">
     <formatter type="xml" tofile="checkstyle_report.xml"/>
     <fileset dir="oyg" includes="**/*.java"/>
     <fileset dir="org" includes="**/*.java"/>
